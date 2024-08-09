@@ -1,6 +1,6 @@
 const EVENTS_DELAY = 20000;
 document.documentElement.lang = 'lus';
-const defaultLanguage = document.documentElement.getAttribute('lang')
+const defaultLanguage = document.documentElement.getAttribute('lang');
 
 const gamePromoConfigs = {
     MyCloneArmy: {
@@ -63,7 +63,7 @@ async function getTranslation(key) {
 function applyTranslations(translations) {
     document.querySelector('h1').innerText = translations.title;
     document.getElementById('keyCountLabel').innerText = keygenActive
-        ? translations.selectKeyCountLabel_selected + document.getElementById('keyCountSelect').value
+        ? translations.selectKeyCountLabel_selected + '1'
         : translations.selectKeyCountLabel;
     document.getElementById('startBtn').innerText = translations.generateButton;
     document.getElementById('generatedKeysTitle').innerText = translations.generatedKeysTitle;
@@ -95,8 +95,6 @@ languageSelect.addEventListener('change', () => {
 
 document.getElementById('startBtn').addEventListener('click', async () => {
     const startBtn = document.getElementById('startBtn');
-    const keyCountSelect = document.getElementById('keyCountSelect');
-    const keyCountLabel = document.getElementById('keyCountLabel');
     const progressContainer = document.getElementById('progressContainer');
     const progressBar = document.getElementById('progressBar');
     const progressText = document.getElementById('progressText');
@@ -104,7 +102,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     const keysList = document.getElementById('keysList');
     const copyAllBtn = document.getElementById('copyAllBtn');
     const generatedKeysTitle = document.getElementById('generatedKeysTitle');
-    const keyCount = parseInt(keyCountSelect.value);
+    const keyCount = 1; // Always set to 1
     document.getElementById("gameSelect").disabled = true;
 
     progressBar.style.width = '0%';
@@ -113,8 +111,6 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     keyContainer.classList.add('hidden');
     generatedKeysTitle.classList.add('hidden');
     keysList.innerHTML = '';
-    keyCountSelect.classList.add('hidden');
-    keyCountLabel.innerText = await getTranslation('selectKeyCountLabel_selected') + keyCount;
     startBtn.classList.add('hidden');
     copyAllBtn.classList.add('hidden');
     startBtn.disabled = true;
@@ -204,7 +200,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
 
     keyContainer.classList.remove('hidden');
     generatedKeysTitle.classList.remove('hidden');
-    keyCountLabel.innerText = await getTranslation('selectKeyCountLabel');
+    document.getElementById('keyCountLabel').innerText = await getTranslation('selectKeyCountLabel');
     document.getElementById("gameSelect").disabled = false;
     document.querySelectorAll('.copyKeyBtn').forEach(button => {
         button.addEventListener('click', (event) => {
@@ -227,12 +223,11 @@ document.getElementById('startBtn').addEventListener('click', async () => {
             setTimeout(async () => {
                 event.target.innerText = await getTranslation('copyAllKeysButton');
                 event.target.style.backgroundColor = '#6a0080';
-            }, 2000);
+                        }, 2000);
         });
     });
 
     startBtn.classList.remove('hidden');
-    keyCountSelect.classList.remove('hidden');
     startBtn.disabled = false;
 });
 
@@ -259,7 +254,6 @@ async function login(clientId) {
         } else {
             throw new Error(data.error_message || 'Harsatna a awm avangin a tih theih rih loh.');
         }
-        
     }
     return data.clientToken;
 }
@@ -338,3 +332,4 @@ function sleep(ms) {
 function delayRandom() {
     return Math.random() / 3 + 1;
 }
+
