@@ -1,6 +1,6 @@
 const EVENTS_DELAY = 20000;
 document.documentElement.lang = 'lus';
-const defaultLanguage = document.documentElement.getAttribute('lang');
+const defaultLanguage = document.documentElement.getAttribute('lang')
 
 const gamePromoConfigs = {
     MyCloneArmy: {
@@ -82,14 +82,14 @@ async function switchLanguage(language) {
         applyTranslations(translations);
         currentLanguage = language;
         localStorage.setItem('language', language);
-        languageSelect.value = language;
+        document.getElementById('languageSelect').value = language;
     } catch (error) {
         console.error('Error switching language:', error);
     }
 }
 
-languageSelect.addEventListener('change', () => {
-    const newLanguage = languageSelect.value;
+document.getElementById('languageSelect').addEventListener('change', () => {
+    const newLanguage = document.getElementById('languageSelect').value;
     switchLanguage(newLanguage);
 });
 
@@ -102,7 +102,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     const keysList = document.getElementById('keysList');
     const copyAllBtn = document.getElementById('copyAllBtn');
     const generatedKeysTitle = document.getElementById('generatedKeysTitle');
-    const keyCount = 1; // Always set to 1
+    const keyCount = 1;  // Always set keyCount to 1
     document.getElementById("gameSelect").disabled = true;
 
     progressBar.style.width = '0%';
@@ -111,6 +111,8 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     keyContainer.classList.add('hidden');
     generatedKeysTitle.classList.add('hidden');
     keysList.innerHTML = '';
+    document.getElementById('keyCountSelect').classList.add('hidden');
+    document.getElementById('keyCountLabel').innerText = await getTranslation('selectKeyCountLabel_selected') + keyCount;
     startBtn.classList.add('hidden');
     copyAllBtn.classList.add('hidden');
     startBtn.disabled = true;
@@ -215,7 +217,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
             });
         });
     });
-    copyAllBtn.addEventListener('click', async (event) => {
+        copyAllBtn.addEventListener('click', async (event) => {
         const keysText = keys.filter(key => key).join('\n');
         navigator.clipboard.writeText(keysText).then(async () => {
             event.target.innerText = await getTranslation('allKeysCopied');
@@ -223,11 +225,12 @@ document.getElementById('startBtn').addEventListener('click', async () => {
             setTimeout(async () => {
                 event.target.innerText = await getTranslation('copyAllKeysButton');
                 event.target.style.backgroundColor = '#6a0080';
-                        }, 2000);
+            }, 2000);
         });
     });
 
     startBtn.classList.remove('hidden');
+    document.getElementById('keyCountSelect').classList.remove('hidden');
     startBtn.disabled = false;
 });
 
@@ -249,7 +252,7 @@ async function login(clientId) {
     });
     const data = await response.json();
     if (!response.ok) {
-        if (data.error_code == "TooManyIpRequest") {
+        if (data.error_code === "TooManyIpRequest") {
             throw new Error('Tih lai a tam lutuk, nghah rih a ngai.');
         } else {
             throw new Error(data.error_message || 'Harsatna a awm avangin a tih theih rih loh.');
@@ -303,9 +306,6 @@ async function emulateProgress(clientToken) {
         })
     });
     const data = await response.json();
-    // if (!response.ok) {
-    //     throw new Error(data.error_message || 'Failed to register event');
-    // }
     return data.hasCode;
 }
 
