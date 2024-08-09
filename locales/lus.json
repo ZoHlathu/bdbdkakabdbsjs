@@ -1,0 +1,13 @@
+{
+    "title": "Hamster Kombat Key Generator",
+    "generateButton": "Generate",
+    "generatedKeysTitle": "Generated key(s):",
+    "footerButton": "Made by RSR",
+    "copyKeyButton": "Copy",
+    "keyCopied": "Copied",
+    "copyAllKeysButton": "Copy all keys",
+    "allKeysCopied": "Copied",
+    "selectKeyCountLabel": "Select the number of keys to generate:",
+    "selectKeyCountLabel_selected": "The selected number of keys to generate: ",
+    "selectGameLabel": "Select the game to generate the keys:"
+}
