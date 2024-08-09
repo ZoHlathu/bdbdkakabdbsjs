@@ -152,34 +152,13 @@ select option {
 }
 
 .key-number {
-    display: inline-block;
-    text-align: center;
-    width: 40px;
-    padding: 10px 10px;
-    background-color: #6a0080;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    margin: 5px;
+    display: none;
 }
 
 .key-item button {
-    margin-left: 10px;
-    background-color: #6a0080;
-    border: none;
-    padding: 10px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    color: white;
-    font-size: 14px;
-    transition: background-color 0.3s, transform 0.3s, color 0.3s;
+    display: none;
 }
 
-.key-item button:hover {
-    background-color: #4a004d;
-}
 
 .hidden {
     display: none;
@@ -193,8 +172,8 @@ select option {
 
 .footer-button {
     margin-top: 20px;
-    background-color: #6a0080;
-    color: white;
+    background-color: #4b006e;
+    color: #e0b3ff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
