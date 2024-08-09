@@ -235,7 +235,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
 });
 
 document.getElementById('creatorChannelBtn').addEventListener('click', () => {
-    window.location.href = 'https://telegram.me/hamsterkeysgenerators';
+    window.location.href = 'https://telegram.me/rsrbots';
 });
 
 function generateClientId() {
@@ -253,7 +253,7 @@ async function login(clientId) {
     const data = await response.json();
     if (!response.ok) {
         if (data.error_code == "TooManyIpRequest") {
-            throw new Error('You have reached the rate limit. Please wait a few minutes and try again.');
+            throw new Error('Tih lai a tam lutuk, nghah rih a ngai.');
         } else {
             throw new Error(data.error_message || 'Failed to log in');
         }
