@@ -48,7 +48,7 @@ async function loadTranslations(language) {
         return await response.json();
     } catch (error) {
         console.error('Error loading translations:', error);
-        alert('Harsatna eng emaw vangin a tih theih loh.');
+        alert('Failed to load translations. Check the console for details.');
         throw error;
     }
 }
@@ -70,7 +70,7 @@ function applyTranslations(translations) {
     document.getElementById('gameSelectLabel').innerText = translations.selectGameLabel;
 
     document.querySelectorAll('.copyKeyBtn').forEach(button => {
-        button.innerText = translations.copyKeyButton || 'Copy';
+        button.innerText = translations.copyKeyButton || 'Copy Key';
     });
 }
 
@@ -82,7 +82,7 @@ async function switchLanguage(language) {
         localStorage.setItem('language', language);
         languageSelect.value = language;
     } catch (error) {
-        console.error('error);
+        console.error('Error switching language:', error);
     }
 }
 
@@ -235,7 +235,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
 });
 
 document.getElementById('creatorChannelBtn').addEventListener('click', () => {
-    window.location.href = 'https://telegram.me/rsrbots';
+    window.location.href = 'https://telegram.me/hamsterkeysgenerators';
 });
 
 function generateClientId() {
@@ -335,4 +335,4 @@ function sleep(ms) {
 
 function delayRandom() {
     return Math.random() / 3 + 1;
-        }
+            }
