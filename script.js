@@ -91,19 +91,6 @@ languageSelect.addEventListener('change', () => {
     switchLanguage(newLanguage);
 });
 
-function resetUI() {
-    document.getElementById('progressContainer').classList.add('hidden');
-    document.getElementById('keyContainer').classList.add('hidden');
-    document.getElementById('keyCountSelect').classList.remove('hidden');
-    document.getElementById('keyCountLabel').innerText = await getTranslation('selectKeyCountLabel');
-    document.getElementById('startBtn').classList.remove('hidden');
-    document.getElementById('startBtn').innerText = 'Generate';
-    document.getElementById('startBtn').disabled = false;
-    document.getElementById('copyAllBtn').classList.add('hidden');
-    document.getElementById('gameSelect').disabled = false;
-}
-
-
 document.getElementById('startBtn').addEventListener('click', async () => {
     const startBtn = document.getElementById('startBtn');
     const keyCountSelect = document.getElementById('keyCountSelect');
@@ -116,144 +103,135 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     const copyAllBtn = document.getElementById('copyAllBtn');
     const generatedKeysTitle = document.getElementById('generatedKeysTitle');
     const keyCount = parseInt(keyCountSelect.value);
+    document.getElementById("gameSelect").disabled = true;
 
-    if (startBtn.innerText === 'Generate') {
-        // Generate keys logic
-        document.getElementById("gameSelect").disabled = true;
+    progressBar.style.width = '0%';
+    progressText.innerText = '0%';
+    progressContainer.classList.remove('hidden');
+    keyContainer.classList.add('hidden');
+    generatedKeysTitle.classList.add('hidden');
+    keysList.innerHTML = '';
+    keyCountSelect.classList.add('hidden');
+    keyCountLabel.innerText = await getTranslation('selectKeyCountLabel_selected') + keyCount;
+    startBtn.classList.add('hidden');
+    copyAllBtn.classList.add('hidden');
+    startBtn.disabled = true;
 
-        progressBar.style.width = '0%';
-        progressText.innerText = '0%';
-        progressContainer.classList.remove('hidden');
-        keyContainer.classList.add('hidden');
-        generatedKeysTitle.classList.add('hidden');
-        keysList.innerHTML = '';
-        keyCountSelect.classList.add('hidden');
-        keyCountLabel.innerText = await getTranslation('selectKeyCountLabel_selected') + keyCount;
-        startBtn.classList.add('hidden');
-        copyAllBtn.classList.add('hidden');
-        startBtn.disabled = true;
+    let progress = 0;
+    keygenActive = true;
 
-        let progress = 0;
-        keygenActive = true;
+    const updateProgress = (increment) => {
+        const steps = 10;
+        const stepIncrement = increment / steps;
+        let step = 0;
 
-        const updateProgress = (increment) => {
-            const steps = 10;
-            const stepIncrement = increment / steps;
-            let step = 0;
-
-            const increaseProgress = () => {
-                if (!keygenActive) return;
-                if (step < steps) {
-                    progress += stepIncrement;
-                    progressBar.style.width = `${progress}%`;
-                    progressText.innerText = `${Math.round(progress)}%`;
-                    step++;
-                    setTimeout(increaseProgress, 2000 / steps + Math.random() * 1000);
-                }
-            };
-
-            increaseProgress();
-        };
-
-        const generateKeyProcess = async () => {
-            const clientId = generateClientId();
-            let clientToken;
-            try {
-                clientToken = await login(clientId);
-            } catch (error) {
-                alert(`Failed to log in: ${error.message}`);
-                startBtn.disabled = false;
-                return null;
-            }
-
-            for (let i = 0; i < 7; i++) {
-                await sleep(EVENTS_DELAY * delayRandom());
-                const hasCode = await emulateProgress(clientToken);
-                updateProgress(10 / keyCount);
-                if (hasCode) {
-                    break;
-                }
-            }
-
-            try {
-                const key = await generateKey(clientToken);
-                updateProgress(30 / keyCount);
-                return key;
-            } catch (error) {
-                alert(`Error: Harsatna eng emaw vangin a tih theih loh.`);
-                return null;
+        const increaseProgress = () => {
+            if (!keygenActive) return;
+            if (step < steps) {
+                progress += stepIncrement;
+                progressBar.style.width = `${progress}%`;
+                progressText.innerText = `${Math.round(progress)}%`;
+                step++;
+                setTimeout(increaseProgress, 2000 / steps + Math.random() * 1000);
             }
         };
 
-        const keys = await Promise.all(Array.from({ length: keyCount }, generateKeyProcess));
+        increaseProgress();
+    };
 
-        keygenActive = false;
-
-        progressBar.style.width = '100%';
-        progressText.innerText = '100%';
-
-        if (keys.length > 1) {
-            const keyItemsPromises = keys.filter(key => key).map(async (key, index) => {
-                const copyKeyButtonText = await getTranslation('copyKeyButton');
-                return `
-                    <div class="key-item">
-                        <div class="key-number">${index + 1}</div>
-                        <input type="text" value="${key}" readonly>
-                        <button class="copyKeyBtn copy-button" data-key="${key}">${copyKeyButtonText}</button>
-                    </div>
-                `;
-            });
-            const keyItemsHtml = await Promise.all(keyItemsPromises);
-            keysList.innerHTML = keyItemsHtml.join('');
-            copyAllBtn.classList.remove('hidden');
-        } else if (keys.length === 1) {
-            keysList.innerHTML = `
-                <div class="key-item">
-                    <div class="key-number">1</div>
-                    <input type="text" value="${keys[0]}" readonly>
-                    <button class="copyKeyBtn copy-button" data-key="${keys[0]}">${await getTranslation('copyKeyButton')}</button>
-                </div>
-            `;
+    const generateKeyProcess = async () => {
+        const clientId = generateClientId();
+        let clientToken;
+        try {
+            clientToken = await login(clientId);
+        } catch (error) {
+            alert(`Failed to log in: ${error.message}`);
+            startBtn.disabled = false;
+            return null;
         }
 
-        keyContainer.classList.remove('hidden');
-        generatedKeysTitle.classList.remove('hidden');
-        keyCountLabel.innerText = await getTranslation('selectKeyCountLabel');
-        document.getElementById("gameSelect").disabled = false;
+        for (let i = 0; i < 7; i++) {
+            await sleep(EVENTS_DELAY * delayRandom());
+            const hasCode = await emulateProgress(clientToken);
+            updateProgress(10 / keyCount);
+            if (hasCode) {
+                break;
+            }
+        }
 
-        document.querySelectorAll('.copyKeyBtn').forEach(button => {
-            button.addEventListener('click', (event) => {
-                const key = event.target.getAttribute('data-key');
-                navigator.clipboard.writeText(key).then(async () => {
-                    event.target.innerText = await getTranslation('keyCopied');
-                    event.target.style.backgroundColor = '#28a745';
-                    setTimeout(async () => {
-                        event.target.innerText = await getTranslation('copyKeyButton');
-                        event.target.style.backgroundColor = '#6a0080';
-                    }, 2000);
-                });
-            });
+        try {
+            const key = await generateKey(clientToken);
+            updateProgress(30 / keyCount);
+            return key;
+        } catch (error) {
+            alert(`Error: Harsatna eng emaw vangin a tih theih loh.`);
+            return null;
+        }
+    };
+
+    const keys = await Promise.all(Array.from({ length: keyCount }, generateKeyProcess));
+
+    keygenActive = false;
+
+    progressBar.style.width = '100%';
+    progressText.innerText = '100%';
+
+    if (keys.length > 1) {
+        const keyItemsPromises = keys.filter(key => key).map(async (key, index) => {
+            const copyKeyButtonText = await getTranslation('copyKeyButton');
+            return `
+                <div class="key-item">
+                    <div class="key-number">${index + 1}</div>
+                    <input type="text" value="${key}" readonly>
+                    <button class="copyKeyBtn copy-button" data-key="${key}">${copyKeyButtonText}</button>
+                </div>
+            `;
         });
+        const keyItemsHtml = await Promise.all(keyItemsPromises);
+        keysList.innerHTML = keyItemsHtml.join('');
+        copyAllBtn.classList.remove('hidden');
+    } else if (keys.length === 1) {
+        keysList.innerHTML = `
+            <div class="key-item">
+                <div class="key-number">1</div>
+                <input type="text" value="${keys[0]}" readonly>
+                <button class="copyKeyBtn copy-button" data-key="${keys[0]}">${await getTranslation('copyKeyButton')}</button>
+            </div>
+        `;
+    }
 
-        copyAllBtn.addEventListener('click', async (event) => {
-            const keysText = keys.filter(key => key).join('\n');
-            navigator.clipboard.writeText(keysText).then(async () => {
-                event.target.innerText = await getTranslation('allKeysCopied');
+    keyContainer.classList.remove('hidden');
+    generatedKeysTitle.classList.remove('hidden');
+    keyCountLabel.innerText = await getTranslation('selectKeyCountLabel');
+    document.getElementById("gameSelect").disabled = false;
+    document.querySelectorAll('.copyKeyBtn').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const key = event.target.getAttribute('data-key');
+            navigator.clipboard.writeText(key).then(async () => {
+                event.target.innerText = await getTranslation('keyCopied');
                 event.target.style.backgroundColor = '#28a745';
                 setTimeout(async () => {
-                    event.target.innerText = await getTranslation('copyAllKeysButton');
+                    event.target.innerText = await getTranslation('copyKeyButton');
                     event.target.style.backgroundColor = '#6a0080';
                 }, 2000);
             });
         });
+    });
+    copyAllBtn.addEventListener('click', async (event) => {
+        const keysText = keys.filter(key => key).join('\n');
+        navigator.clipboard.writeText(keysText).then(async () => {
+            event.target.innerText = await getTranslation('allKeysCopied');
+            event.target.style.backgroundColor = '#28a745';
+            setTimeout(async () => {
+                event.target.innerText = await getTranslation('copyAllKeysButton');
+                event.target.style.backgroundColor = '#6a0080';
+            }, 2000);
+        });
+    });
 
-        startBtn.classList.remove('hidden');
-        startBtn.innerText = 'Reload';
-        startBtn.disabled = false;
-    } else if (startBtn.innerText === 'Reload') {
-        // Reset the UI
-        resetUI();
-    }
+    startBtn.classList.remove('hidden');
+    keyCountSelect.classList.remove('hidden');
+    startBtn.disabled = false;
 });
 
 document.getElementById('creatorChannelBtn').addEventListener('click', () => {
@@ -357,4 +335,4 @@ function sleep(ms) {
 
 function delayRandom() {
     return Math.random() / 3 + 1;
-            }
+}
