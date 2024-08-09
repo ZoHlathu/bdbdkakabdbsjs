@@ -152,7 +152,17 @@ select option {
 }
 
 .key-number {
-    display: none;
+    display: inline-block;
+    text-align: center;
+    width: 40px;
+    padding: 10px 10px;
+    background-color: #6a0080;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 5px;
 }
 
 .key-item button {
@@ -170,6 +180,7 @@ select option {
 .key-item button:hover {
     background-color: #4a004d;
 }
+
 
 
 
