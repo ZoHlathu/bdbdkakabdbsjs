@@ -60,11 +60,13 @@ async function getTranslation(key) {
 
 function applyTranslations(translations) {
     document.querySelector('h1').innerText = translations.title;
-    
+    document.getElementById('keyCountLabel').innerText = keygenActive
+        ? translations.selectKeyCountLabel_selected + document.getElementById('keyCountSelect').value
+        : translations.selectKeyCountLabel;
     document.getElementById('startBtn').innerText = translations.generateButton;
     document.getElementById('generatedKeysTitle').innerText = translations.generatedKeysTitle;
     document.getElementById('creatorChannelBtn').innerText = translations.footerButton;
-    
+   document.getElementById('copyAllBtn').innerText = translations.copyAllKeysButton;
     document.getElementById('gameSelectLabel').innerText = translations.selectGameLabel;
 
     document.querySelectorAll('.copyKeyBtn').forEach(button => {
@@ -91,15 +93,16 @@ languageSelect.addEventListener('change', () => {
 
 document.getElementById('startBtn').addEventListener('click', async () => {
     const startBtn = document.getElementById('startBtn');
-    
+    const keyCountSelect = document.getElementById('keyCountSelect');
+    const keyCountLabel = document.getElementById('keyCountLabel');
     const progressContainer = document.getElementById('progressContainer');
     const progressBar = document.getElementById('progressBar');
     const progressText = document.getElementById('progressText');
     const keyContainer = document.getElementById('keyContainer');
-    
-    
+    const keysList = document.getElementById('keysList');
+    const copyAllBtn = document.getElementById('copyAllBtn');
     const generatedKeysTitle = document.getElementById('generatedKeysTitle');
-    const keyCount = 1;
+    const keyCount = parseInt(keyCountSelect.value);
     document.getElementById("gameSelect").disabled = true;
 
     progressBar.style.width = '0%';
@@ -107,8 +110,9 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     progressContainer.classList.remove('hidden');
     keyContainer.classList.add('hidden');
     generatedKeysTitle.classList.add('hidden');
-    
-
+    keysList.innerHTML = '';
+    keyCountSelect.classList.add('hidden');
+    keyCountLabel.innerText = await getTranslation('selectKeyCountLabel_selected') + keyCount;
     startBtn.classList.add('hidden');
     copyAllBtn.classList.add('hidden');
     startBtn.disabled = true;
@@ -172,7 +176,21 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     progressBar.style.width = '100%';
     progressText.innerText = '100%';
 
-    if (keys.length === 1) {
+    if (keys.length > 1) {
+        const keyItemsPromises = keys.filter(key => key).map(async (key, index) => {
+            const copyKeyButtonText = await getTranslation('copyKeyButton');
+            return `
+                <div class="key-item">
+                    <div class="key-number">${index + 1}</div>
+                    <input type="text" value="${key}" readonly>
+                    <button class="copyKeyBtn copy-button" data-key="${key}">${copyKeyButtonText}</button>
+                </div>
+            `;
+        });
+        const keyItemsHtml = await Promise.all(keyItemsPromises);
+        keysList.innerHTML = keyItemsHtml.join('');
+        copyAllBtn.classList.remove('hidden');
+    } else if (keys.length === 1) {
         keysList.innerHTML = `
             <div class="key-item">
                 <div class="key-number">1</div>
@@ -184,6 +202,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
 
     keyContainer.classList.remove('hidden');
     generatedKeysTitle.classList.remove('hidden');
+    keyCountLabel.innerText = await getTranslation('selectKeyCountLabel');
     document.getElementById("gameSelect").disabled = false;
     document.querySelectorAll('.copyKeyBtn').forEach(button => {
         button.addEventListener('click', (event) => {
@@ -198,7 +217,17 @@ document.getElementById('startBtn').addEventListener('click', async () => {
             });
         });
     });
-    
+    copyAllBtn.addEventListener('click', async (event) => {
+        const keysText = keys.filter(key => key).join('\n');
+        navigator.clipboard.writeText(keysText).then(async () => {
+            event.target.innerText = await getTranslation('allKeysCopied');
+            event.target.style.backgroundColor = '#28a745';
+            setTimeout(async () => {
+                event.target.innerText = await getTranslation('copyAllKeysButton');
+                event.target.style.backgroundColor = '#6a0080';
+            }, 2000);
+        });
+    });
 
     startBtn.classList.remove('hidden');
     keyCountSelect.classList.remove('hidden');
@@ -206,7 +235,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
 });
 
 document.getElementById('creatorChannelBtn').addEventListener('click', () => {
-    window.location.href = 'https://telegram.me/rsrbots';
+    window.location.href = 'https://telegram.me/hamsterkeysgenerators';
 });
 
 function generateClientId() {
