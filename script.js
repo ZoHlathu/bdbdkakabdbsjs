@@ -60,9 +60,9 @@ async function getTranslation(key) {
 
 function applyTranslations(translations) {
     document.querySelector('h1').innerText = translations.title;
-    document.getElementById('keyCountLabel').innerText = keygenActive
-        ? translations.selectKeyCountLabel_selected + document.getElementById('keyCountSelect').value
-        : translations.selectKeyCountLabel;
+    //document.getElementById('keyCountLabel').innerText = keygenActive
+        //? translations.selectKeyCountLabel_selected + document.getElementById('keyCountSelect').value
+        //: translations.selectKeyCountLabel;
     document.getElementById('startBtn').innerText = translations.generateButton;
     document.getElementById('generatedKeysTitle').innerText = translations.generatedKeysTitle;
     document.getElementById('creatorChannelBtn').innerText = translations.footerButton;
@@ -102,7 +102,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     const keysList = document.getElementById('keysList');
     const copyAllBtn = document.getElementById('copyAllBtn');
     const generatedKeysTitle = document.getElementById('generatedKeysTitle');
-    const keyCount = parseInt(keyCountSelect.value);
+    const keyCount = 1;
     document.getElementById("gameSelect").disabled = true;
 
     progressBar.style.width = '0%';
