@@ -70,7 +70,7 @@ function applyTranslations(translations) {
     document.getElementById('gameSelectLabel').innerText = translations.selectGameLabel;
 
     document.querySelectorAll('.copyKeyBtn').forEach(button => {
-        button.innerText = translations.copyKeyButton || 'Copy Key';
+        button.innerText = translations.copyKeyButton || 'Copy';
     });
 }
 
@@ -235,7 +235,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
 });
 
 document.getElementById('creatorChannelBtn').addEventListener('click', () => {
-    window.location.href = 'https://telegram.me/hamsterkeysgenerators';
+    window.location.href = 'https://telegram.me/rsrbots';
 });
 
 function generateClientId() {
