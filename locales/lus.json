@@ -7,7 +7,7 @@
     "keyCopied": "Copied",
     "copyAllKeysButton": "Copy all keys",
     "allKeysCopied": "Copied",
-    "selectKeyCountLabel": "I generate duh zat thlang leh rawh",
-    "selectKeyCountLabel_selected": "Generate tur zat",
-    "selectGameLabel": "I game duh thlang rawh"
+    "selectKeyCountLabel": "I generate duh zat thlang leh rawh:",
+    "selectKeyCountLabel_selected": "Generate tur zat: ",
+    "selectGameLabel": "I game duh thlang rawh:"
 }
