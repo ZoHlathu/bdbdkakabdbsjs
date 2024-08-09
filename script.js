@@ -91,6 +91,19 @@ languageSelect.addEventListener('change', () => {
     switchLanguage(newLanguage);
 });
 
+function resetUI() {
+    document.getElementById('progressContainer').classList.add('hidden');
+    document.getElementById('keyContainer').classList.add('hidden');
+    document.getElementById('keyCountSelect').classList.remove('hidden');
+    document.getElementById('keyCountLabel').innerText = await getTranslation('selectKeyCountLabel');
+    document.getElementById('startBtn').classList.remove('hidden');
+    document.getElementById('startBtn').innerText = 'Generate';
+    document.getElementById('startBtn').disabled = false;
+    document.getElementById('copyAllBtn').classList.add('hidden');
+    document.getElementById('gameSelect').disabled = false;
+}
+
+
 document.getElementById('startBtn').addEventListener('click', async () => {
     const startBtn = document.getElementById('startBtn');
     const keyCountSelect = document.getElementById('keyCountSelect');
