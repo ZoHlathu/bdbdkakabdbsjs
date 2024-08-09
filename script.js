@@ -48,7 +48,7 @@ async function loadTranslations(language) {
         return await response.json();
     } catch (error) {
         console.error('Error loading translations:', error);
-        alert('Harsatna eng emaw vangin a tih theih loh.');
+        alert('Error: Harsatna eng emaw vangin a tih theih loh.');
         throw error;
     }
 }
@@ -164,7 +164,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
             updateProgress(30 / keyCount);
             return key;
         } catch (error) {
-            alert(`Harsatna eng emaw vangin a tih theih loh.`);
+            alert(`Error: Harsatna eng emaw vangin a tih theih loh.`);
             return null;
         }
     };
@@ -253,7 +253,7 @@ async function login(clientId) {
     const data = await response.json();
     if (!response.ok) {
         if (data.error_code == "TooManyIpRequest") {
-            throw new Error('Generate an tam rih a, nghah rih a ngai.');
+            throw new Error('Error: Generate an tam rih a, nghah rih a ngai.');
         } else {
             throw new Error(data.error_message || 'Failed to log in');
         }
