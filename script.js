@@ -48,7 +48,7 @@ async function loadTranslations(language) {
         return await response.json();
     } catch (error) {
         console.error('Error loading translations:', error);
-        alert('Failed to load translations. Check the console for details.');
+        alert('Ṭawng a thlak theih rih loh.');
         throw error;
     }
 }
@@ -70,7 +70,7 @@ function applyTranslations(translations) {
     document.getElementById('gameSelectLabel').innerText = translations.selectGameLabel;
 
     document.querySelectorAll('.copyKeyBtn').forEach(button => {
-        button.innerText = translations.copyKeyButton || 'Copy Key';
+        button.innerText = translations.copyKeyButton || 'Copy';
     });
 }
 
@@ -145,7 +145,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
         try {
             clientToken = await login(clientId);
         } catch (error) {
-            alert(`Failed to log in: ${error.message}`);
+            alert(`Harsatna a awm avangin a tih theih rih loh.`);
             startBtn.disabled = false;
             return null;
         }
@@ -164,7 +164,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
             updateProgress(30 / keyCount);
             return key;
         } catch (error) {
-            alert(`Failed to generate key: ${error.message}`);
+            alert(`Harsatna a awm avangin a tih theih rih loh.`);
             return null;
         }
     };
@@ -255,7 +255,7 @@ async function login(clientId) {
         if (data.error_code == "TooManyIpRequest") {
             throw new Error('Tih lai a tam lutuk, nghah rih a ngai.');
         } else {
-            throw new Error(data.error_message || 'Failed to log in');
+            throw new Error(data.error_message || 'Harsatna a awm avangin a tih theih rih loh.');
         }
         
     }
@@ -324,7 +324,7 @@ async function generateKey(clientToken) {
     });
     const data = await response.json();
     if (!response.ok) {
-        throw new Error(data.error_message || 'Failed to generate key');
+        throw new Error(data.error_message || 'Harsatna a awm avangin a tih theih rih loh.');
     }
     return data.promoCode;
 }
