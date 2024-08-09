@@ -93,8 +93,8 @@ languageSelect.addEventListener('change', () => {
 
 document.getElementById('startBtn').addEventListener('click', async () => {
     const startBtn = document.getElementById('startBtn');
-    const keyCountSelect = document.getElementById('keyCountSelect');
-    const keyCountLabel = document.getElementById('keyCountLabel');
+    //const keyCountSelect = document.getElementById('keyCountSelect');
+    //const keyCountLabel = document.getElementById('keyCountLabel');
     const progressContainer = document.getElementById('progressContainer');
     const progressBar = document.getElementById('progressBar');
     const progressText = document.getElementById('progressText');
@@ -111,8 +111,8 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     keyContainer.classList.add('hidden');
     generatedKeysTitle.classList.add('hidden');
     keysList.innerHTML = '';
-    keyCountSelect.classList.add('hidden');
-    keyCountLabel.innerText = await getTranslation('selectKeyCountLabel_selected') + keyCount;
+    //keyCountSelect.classList.add('hidden');
+    //keyCountLabel.innerText = await getTranslation('selectKeyCountLabel_selected') + keyCount;
     startBtn.classList.add('hidden');
     copyAllBtn.classList.add('hidden');
     startBtn.disabled = true;
@@ -235,7 +235,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
 });
 
 document.getElementById('creatorChannelBtn').addEventListener('click', () => {
-    window.location.href = 'https://telegram.me/hamsterkeysgenerators';
+    window.location.href = 'https://telegram.me/rsrbots';
 });
 
 function generateClientId() {
