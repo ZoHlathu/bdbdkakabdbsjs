@@ -165,6 +165,82 @@ document.getElementById('startBtn').addEventListener('click', async () => {
             return key;
         } catch (error) {
             alert(`Harsatna a awm avangin a tih theih rih loh.`);
+document.getElementById('startBtn').addEventListener('click', async () => {
+    const startBtn = document.getElementById('startBtn');
+    const keyCountSelect = document.getElementById('keyCountSelect');
+    const keyCountLabel = document.getElementById('keyCountLabel');
+    const progressContainer = document.getElementById('progressContainer');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const keyContainer = document.getElementById('keyContainer');
+    const keysList = document.getElementById('keysList');
+    const copyAllBtn = document.getElementById('copyAllBtn');
+    const generatedKeysTitle = document.getElementById('generatedKeysTitle');
+    const keyCount = 1; // Always generate 1 key
+    document.getElementById("gameSelect").disabled = true;
+
+    progressBar.style.width = '0%';
+    progressText.innerText = '0%';
+    progressContainer.classList.remove('hidden');
+    keyContainer.classList.add('hidden');
+    generatedKeysTitle.classList.add('hidden');
+    keysList.innerHTML = '';
+    keyCountSelect.classList.add('hidden');
+    keyCountLabel.innerText = await getTranslation('selectKeyCountLabel_selected') + keyCount;
+    startBtn.classList.add('hidden');
+    copyAllBtn.classList.add('hidden');
+    startBtn.disabled = true;
+
+    let progress = 0;
+    keygenActive = true;
+
+    const updateProgress = (increment) => {
+        const steps = 10;
+        const stepIncrement = increment / steps;
+        let step = 0;
+
+        const increaseProgress = () => {
+            if (!keygenActive) return;
+            if (step < steps) {
+                progress += stepIncrement;
+                progressBar.style.width = `${progress}%`;
+                progressText.innerText = `${Math.round(progress)}%`;
+                step++;
+                setTimeout(increaseProgress, 2000 / steps + Math.random() * 1000);
+            } else {
+                console.log('Progress complete:', progress);
+            }
+        };
+
+        increaseProgress();
+    };
+
+    const generateKeyProcess = async () => {
+        const clientId = generateClientId();
+        let clientToken;
+        try {
+            clientToken = await login(clientId);
+        } catch (error) {
+            alert(`Harsatna a awm avangin a tih theih rih loh.`);
+            startBtn.disabled = false;
+            return null;
+        }
+
+        for (let i = 0; i < 7; i++) {
+            await sleep(EVENTS_DELAY * delayRandom());
+            const hasCode = await emulateProgress(clientToken);
+            updateProgress(10 / keyCount);
+            if (hasCode) {
+                break;
+            }
+        }
+
+        try {
+            const key = await generateKey(clientToken);
+            updateProgress(30 / keyCount);
+            return key;
+        } catch (error) {
+            alert(`Harsatna a awm avangin a tih theih rih loh.`);
             return null;
         }
     };
@@ -202,7 +278,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
 
     keyContainer.classList.remove('hidden');
     generatedKeysTitle.classList.remove('hidden');
-    document.getElementById('keyCountLabel').innerText = await getTranslation('selectKeyCountLabel');
+    keyCountLabel.innerText = await getTranslation('selectKeyCountLabel');
     document.getElementById("gameSelect").disabled = false;
     document.querySelectorAll('.copyKeyBtn').forEach(button => {
         button.addEventListener('click', (event) => {
@@ -217,7 +293,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
             });
         });
     });
-        copyAllBtn.addEventListener('click', async (event) => {
+    copyAllBtn.addEventListener('click', async (event) => {
         const keysText = keys.filter(key => key).join('\n');
         navigator.clipboard.writeText(keysText).then(async () => {
             event.target.innerText = await getTranslation('allKeysCopied');
@@ -230,7 +306,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     });
 
     startBtn.classList.remove('hidden');
-    document.getElementById('keyCountSelect').classList.remove('hidden');
+    keyCountSelect.classList.remove('hidden');
     startBtn.disabled = false;
 });
 
