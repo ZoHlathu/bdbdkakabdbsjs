@@ -96,8 +96,8 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     const progressBar = document.getElementById('progressBar');
     const progressText = document.getElementById('progressText');
     const keyContainer = document.getElementById('keyContainer');
-    const keysList = document.getElementById('keysList');
-    const copyAllBtn = document.getElementById('copyAllBtn');
+    
+    
     const generatedKeysTitle = document.getElementById('generatedKeysTitle');
     const keyCount = 1;
     document.getElementById("gameSelect").disabled = true;
@@ -107,7 +107,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     progressContainer.classList.remove('hidden');
     keyContainer.classList.add('hidden');
     generatedKeysTitle.classList.add('hidden');
-    keysList.innerHTML = '';
+    
 
     startBtn.classList.add('hidden');
     copyAllBtn.classList.add('hidden');
