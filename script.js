@@ -205,13 +205,17 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     }
 
     keyContainer.classList.remove('hidden');
-    generatedKeysTitle.classList.remove('hidden');
-    keyCountLabel.innerText = await getTranslation('selectKeyCountLabel');
+    //generatedKeysTitle.classList.remove('hidden');
+    //keyCountLabel.innerText = await getTranslation('selectKeyCountLabel');
 
-    startBtn.innerText = await getTranslation('reloadButton');
+    startBtn.innerText = await getTranslation('Reload');
     startBtn.disabled = false;
     startBtn.classList.remove('hidden');
     startBtn.onclick = () => location.reload();
+    document.getElementById('reloadBtn').addEventListener('click', () => {
+        
+        window.location.reload(); 
+    });
 
     document.querySelectorAll('.copyKeyBtn').forEach(button => {
         button.addEventListener('click', (event) => {
@@ -239,10 +243,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     });
 });
 
-document.getElementById('reloadBtn').addEventListener('click', () => {
-    // Reset everything or reload the page
-    window.location.reload(); // This will reload the page
-});
+
 
    // startBtn.classList.remove('hidden');
     //keyCountSelect.classList.remove('hidden');
