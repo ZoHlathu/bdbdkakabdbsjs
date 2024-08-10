@@ -94,6 +94,7 @@ languageSelect.addEventListener('change', () => {
 
 document.getElementById('startBtn').addEventListener('click', async () => {
     const startBtn = document.getElementById('startBtn');
+    //const reloadBtn = document.getElementById('realoadBtn');
     const gameSelect = document.getElementById('gameSelect');
     const gameSelectLabel = document.getElementById('gameSelectLabel');
     const keyCountSelect = document.getElementById('keyCountSelect');
@@ -107,25 +108,20 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     const generatedKeysTitle = document.getElementById('generatedKeysTitle');
     const keyCount = parseInt(keyCountSelect.value);
 
-    // Hide elements
-    gameSelect.classList.add('hidden');
+    //document.getElementById("gameSelect").disabled = true;
+    document.getElementById("gameSelect").classList.add('hidden');
+    document.getElementById("keyCountSelect").classList.add('hidden');
     gameSelectLabel.classList.add('hidden');
-    keyCountSelect.classList.add('hidden');
-    keyCountLabel.classList.add('hidden');
-    startBtn.classList.add('hidden');
-    copyAllBtn.classList.add('hidden');
-
-    // Update and show progress
     progressBar.style.width = '0%';
     progressText.innerText = '0%';
     progressContainer.classList.remove('hidden');
     keyContainer.classList.add('hidden');
     generatedKeysTitle.classList.add('hidden');
     keysList.innerHTML = '';
-    
+    gameSelect.classList.add('hidden');
+    //reloadBtn.classList.add('hidden');
+    keyCountSelect.classList.add('hidden');
     keyCountLabel.innerText = await getTranslation('selectKeyCountLabel_selected') + keyCount;
-});
-
     startBtn.classList.add('hidden');
     copyAllBtn.classList.add('hidden');
     //startBtn.disabled = true;
