@@ -190,7 +190,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
             const copyKeyButtonText = await getTranslation('copyKeyButton');
             return `
                 <div class="key-item">
-                    <div class="key-number">${index + 1}</div>
+                    
                     <input type="text" value="${key}" readonly>
                     <button class="copyKeyBtn copy-button" data-key="${key}">${copyKeyButtonText}</button>
                 </div>
@@ -202,7 +202,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     } else if (keys.length === 1) {
         keysList.innerHTML = `
             <div class="key-item">
-                <div class="key-number">1</div>
+                
                 <input type="text" value="${keys[0]}" readonly>
                 <button class="copyKeyBtn copy-button" data-key="${keys[0]}">${await getTranslation('copyKeyButton')}</button>
             </div>
