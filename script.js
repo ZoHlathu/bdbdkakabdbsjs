@@ -116,7 +116,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     keyContainer.classList.add('hidden');
     generatedKeysTitle.classList.add('hidden');
     keysList.innerHTML = '';
-    //gameSelect.classList.add('hidden');
+    gameSelect.classList.add('hidden');
     //reloadBtn.classList.add('hidden');
     keyCountSelect.classList.add('hidden');
     keyCountLabel.innerText = await getTranslation('selectKeyCountLabel_selected') + keyCount;
