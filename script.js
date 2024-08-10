@@ -251,6 +251,9 @@ document.getElementById('startBtn').addEventListener('click', async () => {
 document.getElementById('creatorChannelBtn').addEventListener('click', () => {
     window.location.href = 'https://telegram.me/rsrbots';
 });
+document.getElementById('reloadBtn').addEventListener('click', () => {
+    window.location.href = 'https://zohlathu.github.io/bdbdkakabdbsjs/';
+});
 
 function generateClientId() {
     const timestamp = Date.now();
