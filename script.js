@@ -95,6 +95,7 @@ languageSelect.addEventListener('change', () => {
 document.getElementById('startBtn').addEventListener('click', async () => {
     const startBtn = document.getElementById('startBtn');
     //const reloadBtn = document.getElementById('realoadBtn');
+    const gameSelect = document.getElementById('gameSelect');
     const keyCountSelect = document.getElementById('keyCountSelect');
     const keyCountLabel = document.getElementById('keyCountLabel');
     const progressContainer = document.getElementById('progressContainer');
