@@ -112,8 +112,8 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     document.getElementById("gameSelect").classList.add('hidden');
     document.getElementById("keyCountSelect").classList.add('hidden');
     gameSelectLabel.classList.add('hidden');
-    progressBar.style.width = '0%';
-    progressText.innerText = '0%';
+    progressBar.style.width = '1%';
+    progressText.innerText = '1%';
     progressContainer.classList.remove('hidden');
     keyContainer.classList.add('hidden');
     generatedKeysTitle.classList.add('hidden');
@@ -126,7 +126,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     copyAllBtn.classList.add('hidden');
     //startBtn.disabled = true;
 
-    let progress = 0;
+    let progress = 1;
     keygenActive = true;
 
     const updateProgress = (increment) => {
