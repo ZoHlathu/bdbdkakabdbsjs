@@ -92,6 +92,7 @@ languageSelect.addEventListener('change', () => {
 });
 
 document.getElementById('startBtn').addEventListener('click', async () => {
+    
     const startBtn = document.getElementById('startBtn');
     const keyCountSelect = document.getElementById('keyCountSelect');
     const keyCountLabel = document.getElementById('keyCountLabel');
@@ -104,7 +105,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     const generatedKeysTitle = document.getElementById('generatedKeysTitle');
     const keyCount = parseInt(keyCountSelect.value);
     document.getElementById("gameSelect").disabled = true;
-
+    
     progressBar.style.width = '0%';
     progressText.innerText = '0%';
     progressContainer.classList.remove('hidden');
@@ -305,6 +306,10 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     });
 });
 
+document.getElementById('reloadBtn').addEventListener('click', () => {
+    // Reset everything or reload the page
+    window.location.reload(); // This will reload the page
+});
 
    // startBtn.classList.remove('hidden');
     //keyCountSelect.classList.remove('hidden');
