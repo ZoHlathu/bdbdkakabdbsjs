@@ -94,7 +94,7 @@ languageSelect.addEventListener('change', () => {
 
 document.getElementById('startBtn').addEventListener('click', async () => {
     const startBtn = document.getElementById('startBtn');
-    //const reloadBtn = document.getElementById('realoadBtn');
+    const reloadBtn = document.getElementById('realoadBtn');
     const gameSelect = document.getElementById('gameSelect');
     const gameSelectLabel = document.getElementById('gameSelectLabel');
     const keyCountSelect = document.getElementById('keyCountSelect');
@@ -119,7 +119,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     generatedKeysTitle.classList.add('hidden');
     keysList.innerHTML = '';
     gameSelect.classList.add('hidden');
-    //reloadBtn.classList.add('hidden');
+    reloadBtn.classList.add('hidden');
     keyCountSelect.classList.add('hidden');
     keyCountLabel.innerText = await getTranslation('selectKeyCountLabel_selected') + keyCount;
     startBtn.classList.add('hidden');
@@ -213,7 +213,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     //generatedKeysTitle.classList.remove('hidden');
     //keyCountLabel.innerText = await getTranslation('selectKeyCountLabel');
     progressContainer.classList.add('hidden');
-    //reloadBtn.classList.remove('hidden');
+    reloadBtn.classList.remove('hidden');
 
     document.querySelectorAll('.copyKeyBtn').forEach(button => {
         button.addEventListener('click', (event) => {
