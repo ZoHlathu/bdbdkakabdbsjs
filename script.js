@@ -158,6 +158,76 @@ document.getElementById('startBtn').addEventListener('click', async () => {
                 break;
             }
         }
+document.getElementById('startBtn').addEventListener('click', async () => {
+    const startBtn = document.getElementById('startBtn');
+    const keyCountSelect = document.getElementById('keyCountSelect');
+    const keyCountLabel = document.getElementById('keyCountLabel');
+    const progressContainer = document.getElementById('progressContainer');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const keyContainer = document.getElementById('keyContainer');
+    const keysList = document.getElementById('keysList');
+    const copyAllBtn = document.getElementById('copyAllBtn');
+    const generatedKeysTitle = document.getElementById('generatedKeysTitle');
+    const keyCount = parseInt(keyCountSelect.value);
+
+    //document.getElementById("gameSelect").disabled = true;
+    document.getElementById("gameSelect").classList.add('hidden');
+    document.getElementById("keyCountSelect").classList.add('hidden');
+
+    progressBar.style.width = '0%';
+    progressText.innerText = '0%';
+    progressContainer.classList.remove('hidden');
+    keyContainer.classList.add('hidden');
+    generatedKeysTitle.classList.add('hidden');
+    keysList.innerHTML = '';
+    keyCountSelect.classList.add('hidden');
+    keyCountLabel.innerText = await getTranslation('selectKeyCountLabel_selected') + keyCount;
+    startBtn.classList.add('hidden');
+    copyAllBtn.classList.add('hidden');
+    //startBtn.disabled = true;
+
+    let progress = 0;
+    keygenActive = true;
+
+    const updateProgress = (increment) => {
+        const steps = 10;
+        const stepIncrement = increment / steps;
+        let step = 0;
+
+        const increaseProgress = () => {
+            if (!keygenActive) return;
+            if (step < steps) {
+                progress += stepIncrement;
+                progressBar.style.width = `${progress}%`;
+                progressText.innerText = `${Math.round(progress)}%`;
+                step++;
+                setTimeout(increaseProgress, 2000 / steps + Math.random() * 1000);
+            }
+        };
+
+        increaseProgress();
+    };
+
+    const generateKeyProcess = async () => {
+        const clientId = generateClientId();
+        let clientToken;
+        try {
+            clientToken = await login(clientId);
+        } catch (error) {
+            alert(`Failed to log in: ${error.message}`);
+            startBtn.disabled = false;
+            return null;
+        }
+
+        for (let i = 0; i < 7; i++) {
+            await sleep(EVENTS_DELAY * delayRandom());
+            const hasCode = await emulateProgress(clientToken);
+            updateProgress(10 / keyCount);
+            if (hasCode) {
+                break;
+            }
+        }
 
         try {
             const key = await generateKey(clientToken);
@@ -203,7 +273,12 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     keyContainer.classList.remove('hidden');
     generatedKeysTitle.classList.remove('hidden');
     keyCountLabel.innerText = await getTranslation('selectKeyCountLabel');
-    document.getElementById("gameSelect").disabled = false;
+
+    startBtn.innerText = await getTranslation('reloadButton');
+    startBtn.disabled = false;
+    startBtn.classList.remove('hidden');
+    startBtn.onclick = () => location.reload();
+
     document.querySelectorAll('.copyKeyBtn').forEach(button => {
         button.addEventListener('click', (event) => {
             const key = event.target.getAttribute('data-key');
@@ -228,10 +303,12 @@ document.getElementById('startBtn').addEventListener('click', async () => {
             }, 2000);
         });
     });
+});
 
-    startBtn.classList.remove('hidden');
-    keyCountSelect.classList.remove('hidden');
-    startBtn.disabled = false;
+
+   // startBtn.classList.remove('hidden');
+    //keyCountSelect.classList.remove('hidden');
+   // startBtn.disabled = false;
 });
 
 document.getElementById('creatorChannelBtn').addEventListener('click', () => {
