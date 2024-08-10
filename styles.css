@@ -142,13 +142,7 @@ select option {
 }
 
 .key-item input {
-    flex-grow: 1;
-    border: none;
-    background: transparent;
-    color: #e0b3ff;
-    font-size: 16px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    display: none;
 }
 
 
