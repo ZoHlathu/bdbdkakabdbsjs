@@ -207,7 +207,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     keyContainer.classList.remove('hidden');
     //generatedKeysTitle.classList.remove('hidden');
     //keyCountLabel.innerText = await getTranslation('selectKeyCountLabel');
-
+    progressContainer.classList.add('hidden');
     startBtn.innerText = await getTranslation('Reload');
     startBtn.disabled = false;
     startBtn.classList.remove('hidden');
