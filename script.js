@@ -23,6 +23,43 @@ let currentAppConfig = gamePromoConfigs.MyCloneArmy;
 var currentLanguage;
 var keygenActive = false;
 
+document.addEventListener('DOMContentLoaded', function () {
+    const popupOverlay = document.getElementById('popupOverlay');
+    const signUpButton = document.getElementById('signUpButton');
+
+    function openPopup() {
+        popupOverlay.style.display = 'block';
+    }
+
+    function closePopupFunc() {
+        popupOverlay.style.display = 'none';
+    }
+
+    function submitForm() {
+        
+        window.location.href = 'https://t.me/rsrbots';
+
+        
+        setTimeout(function () {
+            closePopupFunc();
+        }, 3000); 
+    }
+
+    
+    openPopup();
+
+   
+    signUpButton.addEventListener('click', submitForm);
+
+   
+    popupOverlay.addEventListener('click', function (event) {
+        if (event.target === popupOverlay) {
+            closePopupFunc();
+        }
+    });
+});
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const languageSelect = document.getElementById('languageSelect');
     const gameSelect = document.getElementById('gameSelect');
