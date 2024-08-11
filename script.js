@@ -27,28 +27,31 @@ document.addEventListener('DOMContentLoaded', function () {
     const popupOverlay = document.getElementById('popupOverlay');
     const signUpButton = document.getElementById('signUpButton');
 
+   
     function openPopup() {
         popupOverlay.style.display = 'block';
     }
 
+    
     function closePopupFunc() {
         popupOverlay.style.display = 'none';
     }
 
+    
     function submitForm() {
-        
         window.location.href = 'https://t.me/rsrbots';
-
-        
         setTimeout(function () {
             closePopupFunc();
-        }, 3000); 
+            
+            localStorage.setItem('popupDismissed', 'true');
+        }, 3000); // Delay to allow the redirect to happen
     }
 
    
-    openPopup();
+    if (localStorage.getItem('popupDismissed') !== 'true') {
+        openPopup();
+    }
 
-    
     signUpButton.addEventListener('click', submitForm);
 });
 
