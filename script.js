@@ -45,19 +45,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 3000); 
     }
 
-    
+   
     openPopup();
 
-   
+    
     signUpButton.addEventListener('click', submitForm);
-
-   
-    popupOverlay.addEventListener('click', function (event) {
-        if (event.target === popupOverlay) {
-            closePopupFunc();
-        }
-    });
 });
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
