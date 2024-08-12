@@ -26,35 +26,43 @@ var keygenActive = false;
 document.addEventListener('DOMContentLoaded', function () {
     const popupOverlay = document.getElementById('popupOverlay');
     const signUpButton = document.getElementById('signUpButton');
+    const popupDismissedKey = 'popupDismissed';
+    const popupDismissedTimeKey = 'popupDismissedTime';
+    const hoursToReappear = 24;
 
-   
     function openPopup() {
         popupOverlay.style.display = 'block';
     }
 
-    
     function closePopupFunc() {
         popupOverlay.style.display = 'none';
     }
 
-    
     function submitForm() {
         window.location.href = 'https://t.me/rsrbots';
         setTimeout(function () {
             closePopupFunc();
-            
-            localStorage.setItem('popupDismissed', 'true');
-        }, 3000); // Delay to allow the redirect to happen
+            localStorage.setItem(popupDismissedKey, 'true');
+            localStorage.setItem(popupDismissedTimeKey, Date.now());
+        }, 3000); 
     }
 
-   
-    if (localStorage.getItem('popupDismissed') !== 'true') {
+    function shouldShowPopup() {
+        const dismissedTime = localStorage.getItem(popupDismissedTimeKey);
+        if (!dismissedTime) {
+            return true;
+        }
+        const timeSinceDismissed = Date.now() - parseInt(dismissedTime, 10);
+        const hoursPassed = timeSinceDismissed / (1000 * 60 * 60);
+        return hoursPassed >= hoursToReappear;
+    }
+
+    if (!localStorage.getItem(popupDismissedKey) || shouldShowPopup()) {
         openPopup();
     }
 
     signUpButton.addEventListener('click', submitForm);
 });
-
 
 
 document.addEventListener('DOMContentLoaded', () => {
