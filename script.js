@@ -24,8 +24,8 @@ var currentLanguage;
 var keygenActive = false;
 
 document.addEventListener('DOMContentLoaded', function () {
-    const popupOverlay = document.getElementById('popupOverlay');
-    const signUpButton = document.getElementById('signUpButton');
+    const popupOverlay = document.getElementById('popupOverlays');
+    const signUpButton = document.getElementById('signUpButtons');
     
    
 
