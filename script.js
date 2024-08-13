@@ -27,8 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const popupOverlay = document.getElementById('popupOverlays');
     const signUpButton = document.getElementById('signUpButtons');
     
-   
-
     function openPopup() {
         popupOverlay.style.display = 'block';
     }
@@ -44,9 +42,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 3000); 
     }
 
-    
-
     signUpButton.addEventListener('click', submitForm);
+    openPopup();
 });
 
 
