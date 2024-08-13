@@ -26,9 +26,8 @@ var keygenActive = false;
 document.addEventListener('DOMContentLoaded', function () {
     const popupOverlay = document.getElementById('popupOverlay');
     const signUpButton = document.getElementById('signUpButton');
-    const popupDismissedKey = 'popupDismissed';
-    const popupDismissedTimeKey = 'popupDismissedTime';
-    const hoursToReappear = 24;
+    
+   
 
     function openPopup() {
         popupOverlay.style.display = 'block';
@@ -43,23 +42,10 @@ document.addEventListener('DOMContentLoaded', function () {
         setTimeout(function () {
             closePopupFunc();
             localStorage.setItem(popupDismissedKey, 'true');
-            localStorage.setItem(popupDismissedTimeKey, Date.now());
         }, 3000); 
     }
 
-    function shouldShowPopup() {
-        const dismissedTime = localStorage.getItem(popupDismissedTimeKey);
-        if (!dismissedTime) {
-            return true;
-        }
-        const timeSinceDismissed = Date.now() - parseInt(dismissedTime, 10);
-        const hoursPassed = timeSinceDismissed / (1000 * 60 * 60);
-        return hoursPassed >= hoursToReappear;
-    }
-
-    if (!localStorage.getItem(popupDismissedKey) || shouldShowPopup()) {
-        openPopup();
-    }
+    
 
     signUpButton.addEventListener('click', submitForm);
 });
