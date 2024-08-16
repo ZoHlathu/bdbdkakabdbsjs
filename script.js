@@ -27,7 +27,7 @@ const gamePromoConfigs = {
     },
 };
 
-let currentAppConfig = gamePromoConfigs.Merge;
+let currentAppConfig = gamePromoConfigs.Twerk;
 var currentLanguage;
 var keygenActive = false;
 
