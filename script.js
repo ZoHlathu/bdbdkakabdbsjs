@@ -1,7 +1,7 @@
 const EVENTS_DELAY = 20000;
 const defaultLanguage = document.documentElement.getAttribute('lang')
 const gamePromoConfigs = {
-    Twerk: {
+    TwerkRace: {
         appToken: '61308365-9d16-4040-8bb0-2f4a4c69074c',
         promoId: '61308365-9d16-4040-8bb0-2f4a4c69074c'
     },
@@ -27,7 +27,7 @@ const gamePromoConfigs = {
     },
 };
 
-let currentAppConfig = gamePromoConfigs.Twerk;
+let currentAppConfig = gamePromoConfigs.TwerkRace;
 var currentLanguage;
 var keygenActive = false;
 
