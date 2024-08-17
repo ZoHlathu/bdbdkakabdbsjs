@@ -191,7 +191,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
             return null;
         }
 
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 10; i++) {
             await sleep(EVENTS_DELAY * delayRandom());
             const hasCode = await emulateProgress(clientToken);
             updateProgress(10 / keyCount);
@@ -202,7 +202,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
 
         try {
             const key = await generateKey(clientToken);
-            updateProgress(30 / keyCount);
+           // updateProgress(30 / keyCount);
             return key;
         } catch (error) {
             alert(`Error: Harsatna eng emaw vangin a tih theih loh.`);
