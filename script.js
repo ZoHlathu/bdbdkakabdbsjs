@@ -216,7 +216,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
             const key = await generateKey(clientToken);
             return key;
         } catch (error) {
-            alert(`Failed to generate key: ${error.message}`);
+            alert(`Error: Harsatna eng emaw vangin a tih theih loh.`);
             return null;
         }
     };
