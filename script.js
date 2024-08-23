@@ -57,7 +57,7 @@ const gamePromoConfigs = {
     },
 };
 
-let currentAppConfig = gamePromoConfigs.Polysphere;
+let currentAppConfig = gamePromoConfigs.MnT;
 var currentLanguage;
 var keygenActive = false;
 
